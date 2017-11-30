@@ -26,17 +26,17 @@ type rbTreeNode struct {
 	collisions map[interface{}]interface{}
 }
 
-type rbTree struct {
+type RBTree struct {
 	root     *rbTreeNode
 	hashFunc func(interface{}) uint64
 }
 
 // New creates a new hash map with supplied hashing function
-func New(hashFunc func(i interface{}) uint64) *rbTree {
-	return &rbTree{hashFunc: hashFunc}
+func New(hashFunc func(i interface{}) uint64) *RBTree {
+	return &RBTree{hashFunc: hashFunc}
 }
 
-func (rb *rbTree) Insert(key, value interface{}) {
+func (rb *RBTree) Insert(key, value interface{}) {
 	keyHash := rb.hashFunc(key)
 
 	child := &rbTreeNode{
@@ -144,7 +144,7 @@ func insertCase5(node *rbTreeNode) {
 	}
 }
 
-func (rb *rbTree) Get(key interface{}) (value interface{}, found bool) {
+func (rb *RBTree) Get(key interface{}) (value interface{}, found bool) {
 	if rb.root == nil {
 		return nil, false
 	}
@@ -164,7 +164,7 @@ func (rb *rbTree) Get(key interface{}) (value interface{}, found bool) {
 	return
 }
 
-func (rb *rbTree) Remove(key interface{}) (found bool) {
+func (rb *RBTree) Remove(key interface{}) (found bool) {
 	keyHash := rb.hashFunc(key)
 	node, found := findByKeyHash(rb.root, key, keyHash)
 	if !found {
