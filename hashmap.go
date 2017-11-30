@@ -14,7 +14,7 @@ const lower matchPosition = -1
 type rbTreeNode struct {
 	color color
 
-	keyHash int64
+	keyHash uint64
 	key     interface{}
 	value   interface{}
 
@@ -28,11 +28,11 @@ type rbTreeNode struct {
 
 type rbTree struct {
 	root     *rbTreeNode
-	hashFunc func(interface{}) int64
+	hashFunc func(interface{}) uint64
 }
 
 // New creates a new hash map with supplied hashing function
-func New(hashFunc func(i interface{}) int64) *rbTree {
+func New(hashFunc func(i interface{}) uint64) *rbTree {
 	return &rbTree{hashFunc: hashFunc}
 }
 
@@ -352,7 +352,7 @@ func getRightmostNode(node *rbTreeNode) *rbTreeNode {
 	return getRightmostNode(node.right)
 }
 
-func findByKeyHash(node *rbTreeNode, key interface{}, keyHash int64) (res *rbTreeNode, found bool) {
+func findByKeyHash(node *rbTreeNode, key interface{}, keyHash uint64) (res *rbTreeNode, found bool) {
 	if node == nil {
 		return
 	} else if keyHash > node.keyHash && !isLeaf(node.right) {
@@ -408,7 +408,7 @@ func rotateRight(root *rbTreeNode) {
 	pivotRightChild.parent = root
 }
 
-func findInsertionParent(n *rbTreeNode, keyHash int64) (*rbTreeNode, matchPosition) {
+func findInsertionParent(n *rbTreeNode, keyHash uint64) (*rbTreeNode, matchPosition) {
 	if keyHash > n.keyHash {
 		if isLeaf(n.right) {
 			return n, greater
